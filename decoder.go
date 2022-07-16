@@ -340,6 +340,37 @@ func (receiver *Decoder) decodeStatus(dst ...any) error {
 	return nil
 }
 
+func (receiver *Decoder) Discard() error {
+	if nil == receiver {
+		return errNilReceiver
+	}
+	if nil != receiver.err {
+		return receiver.err
+	}
+
+	var err error
+	{
+		switch receiver.nextkind {
+		case KindStatus:
+			err = receiver.decodeStatus(io.Discard, io.Discard)
+		case KindComment:
+			err = receiver.decodeComment(io.Discard)
+		case KindInvalid:
+			err = receiver.decodeInvalid(io.Discard)
+		default:
+			err = errInvalidTwtxt
+		}
+	}
+
+	{
+		if nil != err {
+			return receiver.errored(err)
+		}
+
+		return nil
+	}
+}
+
 func (receiver *Decoder) errored(err error) error {
 	if nil == receiver {
 		return err
