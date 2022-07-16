@@ -5,6 +5,10 @@ import (
 )
 
 const (
-	errNilReader = fck.Error("nil reader")
-	errRuneError = fck.Error("rune error")
+	errInvalidTwtxt   = fck.Error("invalid twtxt")
+	errNilReader      = fck.Error("nil reader")
+	errNilReceiver    = fck.Error("nil receiver")
+	errReaderFound    = fck.Error("reader found")
+	errReaderNotFound = fck.Error("reader not found")
+	errRuneError      = fck.Error("rune error")
 )
